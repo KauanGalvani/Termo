@@ -97,7 +97,9 @@ namespace Termo.ConsoleApp
                         Console.WriteLine(palavraDigitada);
                         Console.BackgroundColor = ConsoleColor.Black;
 
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\nVocê ganhou, parabéns!");
+                        Console.ResetColor();
                         Console.WriteLine("Pressione ENTER para sair...");
                         Console.ReadLine();
                         Console.Clear();
@@ -106,7 +108,10 @@ namespace Termo.ConsoleApp
 
                     if (tentativas == 0)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
+                        Console.ResetColor();
+                    
                         Console.WriteLine("Pressione ENTER para sair...");
                         Console.ReadLine();
                         Console.Clear();
