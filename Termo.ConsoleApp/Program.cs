@@ -37,6 +37,68 @@ namespace Termo.ConsoleApp
             }
             return false;
         }
+
+        static bool ChecarPalavra(string? palavraDigitada, string palavra, int tentativas)
+        {
+            if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação
+            {
+                for (int i = 0; i < palavraDigitada?.Length; i++)
+                {
+                    char verificadorDeLetras = palavraDigitada[i];
+
+                    if (verificadorDeLetras == palavra[i]) //letra existe e esta na pósição correta
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write(verificadorDeLetras);
+                        Console.ResetColor();
+
+                    }
+                    else if (palavra.Contains(verificadorDeLetras)) //contains verifica se existe na palavra mas ele nn diz a posição e nem quantas vezes ele s erepete.
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(verificadorDeLetras);
+                        Console.ResetColor();
+
+                    }
+                    else //letra nn existe
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.Write(verificadorDeLetras);
+                        Console.ResetColor();
+
+                    }
+                }
+
+                tentativas--;
+            }
+            else if (palavraDigitada == palavra && tentativas > 0) // virifica se o usuario acertou em cheio e ganhou
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.WriteLine(palavraDigitada);
+                Console.BackgroundColor = ConsoleColor.Black;
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\nVocê ganhou, parabéns!");
+                Console.ResetColor();
+                Console.WriteLine("Pressione ENTER para sair...");
+                Console.ReadLine();
+                Console.Clear();
+                return true;
+            }
+
+            if (tentativas == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
+                Console.ResetColor();
+
+                Console.WriteLine("Pressione ENTER para sair...");
+                Console.ReadLine();
+                Console.Clear();
+                return true;
+            }
+            return false;
+        }
         static void Main(string[] args)
         {
             string[] tiposDePalavras =
@@ -55,82 +117,30 @@ namespace Termo.ConsoleApp
 
             while (true) //loop principal
             {
-                Console.Clear();
-                int tentativas = 5;
+                //Console.Clear();
 
+                bool jogoAcabou = false;
+                int tentativas = 5;
                 string palavra = SortearPalavra(tiposDePalavras);
 
                 Cabecalho();
 
-                while (true)
+                while (jogoAcabou == false)
                 {
-                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
 
                     Console.WriteLine();
 
                     Console.Write(">");
                     string? palavraDigitada = Console.ReadLine();
-                   
-                    if (ValidarPalavra(palavraDigitada))continue;
-                    
 
-                    if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação
-                    {
-                        for (int i = 0; i < palavraDigitada?.Length; i++)
-                        {
-                            char verificadorDeLetras = palavraDigitada[i];
+                    if (ValidarPalavra(palavraDigitada)) continue;
 
-                            if (verificadorDeLetras == palavra[i]) //letra existe e esta na pósição correta
-                            {
-                                Console.BackgroundColor = ConsoleColor.Green;
-                                Console.Write(verificadorDeLetras);
-                                Console.ResetColor();
+                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
 
-                            }
-                            else if (palavra.Contains(verificadorDeLetras)) //contains verifica se existe na palavra mas ele nn diz a posição e nem quantas vezes ele s erepete.
-                            {
-                                Console.BackgroundColor = ConsoleColor.DarkYellow;
-                                Console.Write(verificadorDeLetras);
-                                Console.ResetColor();
+                    jogoAcabou = ChecarPalavra(palavraDigitada, palavra, tentativas);
 
-                            }
-                            else //letra nn existe
-                            {
-                                Console.BackgroundColor = ConsoleColor.DarkRed;
-                                Console.Write(verificadorDeLetras);
-                                Console.ResetColor();
-
-                            }
-                        }
-
-                        tentativas--;
-                    }
-                    else if (palavraDigitada == palavra && tentativas > 0) // virifica se o usuario acertou em cheio e ganhou
-                    {
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        Console.WriteLine(palavraDigitada);
-                        Console.BackgroundColor = ConsoleColor.Black;
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\nVocê ganhou, parabéns!");
-                        Console.ResetColor();
-                        Console.WriteLine("Pressione ENTER para sair...");
-                        Console.ReadLine();
-                        Console.Clear();
-                        break;
-                    }
-
-                    if (tentativas == 0)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
-                        Console.ResetColor();
-
-                        Console.WriteLine("Pressione ENTER para sair...");
-                        Console.ReadLine();
-                        Console.Clear();
-                        break;
-                    }
+                    if (jogoAcabou == true) break;
+                    else tentativas--; continue;
                 }
 
 
