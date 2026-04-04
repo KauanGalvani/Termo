@@ -8,6 +8,9 @@ namespace Termo.ConsoleApp
     {
         static void Main(string[] args)
         {
+            //variaveis e array globais do programa
+            string? palavraDigitada;
+            int tentativas = 5;
             string[] tiposDePalavras =
             [
                 "pedra",
@@ -26,21 +29,20 @@ namespace Termo.ConsoleApp
 
             string PalavraAleatoria = tiposDePalavras[EscolhaDaPalavra];//escolhe a palavra guardada no vetor e guarda em uma variavel para apresentala.
 
-
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("Jogo Termo");
-            Console.WriteLine("--------------------------");
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║            TERMO             ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║  Desenvolvido por Galvani    ║");
+            Console.WriteLine("╚══════════════════════════════╝");
 
             while (true) //loop principal
             {
-                string? palavraDigitada;
-
+                Console.WriteLine($"\nVocê tem {tentativas} tentativas");
 
                 Console.WriteLine();
 
                 Console.Write(">");
                 palavraDigitada = Console.ReadLine();
-
 
                 if (palavraDigitada?.Length != 5 ||
                    string.IsNullOrWhiteSpace(palavraDigitada) ||
@@ -63,28 +65,48 @@ namespace Termo.ConsoleApp
                             Console.BackgroundColor = ConsoleColor.Green;
                             Console.Write(verificadorDeLetras);
                             Console.ResetColor();
+
                         }
                         else if (PalavraAleatoria.Contains(verificadorDeLetras)) //contains verifica se existe na palavra mas ele nn diz a posição e nem quantas vezes ele s erepete.
                         {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
                             Console.Write(verificadorDeLetras);
                             Console.ResetColor();
+
                         }
                         else //letra nn existe
                         {
                             Console.BackgroundColor = ConsoleColor.DarkRed;
                             Console.Write(verificadorDeLetras);
                             Console.ResetColor();
+
                         }
                     }
+
+                    tentativas--;
                 }
-                else if (palavraDigitada == PalavraAleatoria) // virifica se o usuario acertou em cheio e ganhou
+                else if (palavraDigitada == PalavraAleatoria && tentativas > 0) // virifica se o usuario acertou em cheio e ganhou
                 {
                     Console.BackgroundColor = ConsoleColor.Green;
                     Console.WriteLine(palavraDigitada);
                     Console.BackgroundColor = ConsoleColor.Black;
+
+                    Console.WriteLine("\nVocê ganhou, parabéns.");
+                    Console.WriteLine("Pressione ENTER para sair...");
+                    Console.ReadLine();
+                    Console.Clear();
                     break;
                 }
+
+                if (tentativas == 0)
+                {
+                    Console.WriteLine("\nSuas tentativas acabaram você perdeu o jogo");
+                    Console.WriteLine("Pressione ENTER para sair...");
+                    Console.ReadLine();
+                    Console.Clear();
+                    break;
+                }
+                //proxima vez q eu codigoficar tenho q fazer as tentativas assim terminando a parte sequencial do meu programa.
             }
         }
     }
