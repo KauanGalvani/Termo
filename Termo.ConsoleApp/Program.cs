@@ -6,6 +6,56 @@ namespace Termo.ConsoleApp
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            string[] tiposDePalavras =
+            [
+                "pedra",
+                "barco",
+                "noite",
+                "sonho",
+                "campo",
+                "verde",
+                "clima",
+                "vento",
+                "mosca",
+                "livro"
+            ];
+
+            while (true) //loop principal
+            {
+                //Console.Clear();
+
+                bool jogoAcabou = false;
+                int tentativas = 5;
+                string palavra = SortearPalavra(tiposDePalavras);
+
+                Cabecalho();
+
+                while (jogoAcabou == false)
+                {
+                    Console.WriteLine();
+                    Console.Write(">");
+                    string? palavraDigitada = Console.ReadLine();
+
+                    if (ValidarPalavra(palavraDigitada)) continue;
+
+                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
+
+                    jogoAcabou = ChecarPalavra(palavraDigitada, palavra, tentativas);
+
+                    if (!jogoAcabou)
+                    {
+                        tentativas--;
+                        continue;
+                    }
+                    else break;
+                }
+
+                if (!DevContinuar()) break;
+                else continue;
+            }
+        }
 
         static string SortearPalavra(string[] tiposDePalavras)
         {
@@ -68,10 +118,8 @@ namespace Termo.ConsoleApp
 
                     }
                 }
-
-                tentativas--;
             }
-            else if (palavraDigitada == palavra && tentativas > 0) // virifica se o usuario acertou em cheio e ganhou
+            else if (palavraDigitada == palavra) // virifica se o usuario acertou em cheio e ganhou
             {
                 Console.BackgroundColor = ConsoleColor.Green;
                 Console.WriteLine(palavraDigitada);
@@ -99,64 +147,20 @@ namespace Termo.ConsoleApp
             }
             return false;
         }
-        static void Main(string[] args)
+
+        static bool DevContinuar()
         {
-            string[] tiposDePalavras =
-            [
-                "pedra",
-                "barco",
-                "noite",
-                "sonho",
-                "campo",
-                "verde",
-                "clima",
-                "vento",
-                "mosca",
-                "livro"
-            ];
+            Console.WriteLine("Deseja jogar novamente? (S/N)");
+            string? devContinuar = Console.ReadLine()?.ToUpper();
 
-            while (true) //loop principal
+            if (devContinuar != "S")
             {
-                //Console.Clear();
-
-                bool jogoAcabou = false;
-                int tentativas = 5;
-                string palavra = SortearPalavra(tiposDePalavras);
-
-                Cabecalho();
-
-                while (jogoAcabou == false)
-                {
-
-                    Console.WriteLine();
-
-                    Console.Write(">");
-                    string? palavraDigitada = Console.ReadLine();
-
-                    if (ValidarPalavra(palavraDigitada)) continue;
-
-                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
-
-                    jogoAcabou = ChecarPalavra(palavraDigitada, palavra, tentativas);
-
-                    if (jogoAcabou == true) break;
-                    else tentativas--; continue;
-                }
-
-
-                Console.WriteLine("Deseja jogar novamente? (S/N)");
-                string? devContinuar = Console.ReadLine()?.ToUpper();
-
-                if (devContinuar != "S")
-                {
-                    Console.WriteLine("Seu jogo será fechado, obrigado por jogar.");
-                    Console.WriteLine("Pressione ENTER para sair...");
-                    Console.ReadLine();
-                    break;
-                }
-                else continue;
-
+                Console.WriteLine("Seu jogo será fechado, obrigado por jogar.");
+                Console.WriteLine("Pressione ENTER para sair...");
+                Console.ReadLine();
+                return false;
             }
+            else return true;
         }
     }
 }
