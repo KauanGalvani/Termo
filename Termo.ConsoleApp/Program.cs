@@ -19,7 +19,7 @@ namespace Termo.ConsoleApp
                 "verde",
                 "clima",
                 "vento",
-                "fogoa",
+                "mosca",
                 "livro"
             ];
 
@@ -42,7 +42,7 @@ namespace Termo.ConsoleApp
 
                 while (true)
                 {
-                    Console.WriteLine($"\nVocê tem {tentativas} tentativas");
+                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
 
                     Console.WriteLine();
 
@@ -53,7 +53,7 @@ namespace Termo.ConsoleApp
                        string.IsNullOrWhiteSpace(palavraDigitada) ||
                        !palavraDigitada.All(char.IsLetter)) //nesta linha esta tratando sobre o erro ao inserir numero e caractere
                     {
-                        Console.WriteLine("sua palavra deve ter no maximo 5 caracteres sem espaços, numeros ou caracteres especiais");
+                        Console.WriteLine("Sua palavra deve ter no maximo 5 caracteres, sem espaços, numeros ou caracteres especiais.");
                         Console.WriteLine("\nDigite ENTER para digitar novamente...");
                         Console.ReadLine();
                         continue;
@@ -96,7 +96,7 @@ namespace Termo.ConsoleApp
                         Console.WriteLine(palavraDigitada);
                         Console.BackgroundColor = ConsoleColor.Black;
 
-                        Console.WriteLine("\nVocê ganhou, parabéns.");
+                        Console.WriteLine("\nVocê ganhou, parabéns!");
                         Console.WriteLine("Pressione ENTER para sair...");
                         Console.ReadLine();
                         Console.Clear();
@@ -105,7 +105,7 @@ namespace Termo.ConsoleApp
 
                     if (tentativas == 0)
                     {
-                        Console.WriteLine("\nSuas tentativas acabaram você perdeu o jogo");
+                        Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
                         Console.WriteLine("Pressione ENTER para sair...");
                         Console.ReadLine();
                         Console.Clear();
@@ -114,12 +114,12 @@ namespace Termo.ConsoleApp
                 }
 
 
-                Console.WriteLine("Dejesa jogar novamente? (S/N)");
+                Console.WriteLine("Deseja jogar novamente? (S/N)");
                 string? devContinuar = Console.ReadLine()?.ToUpper();
 
                 if (devContinuar != "S")
                 {
-                    Console.WriteLine("Seu jogo sera fechado, obrigado por jogar.");
+                    Console.WriteLine("Seu jogo será fechado, obrigado por jogar.");
                     Console.WriteLine("Pressione ENTER para sair...");
                     Console.ReadLine();
                     break;
