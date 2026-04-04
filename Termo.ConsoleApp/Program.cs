@@ -6,9 +6,39 @@ namespace Termo.ConsoleApp
 {
     class Program
     {
+
+        static string SortearPalavra(string[] tiposDePalavras)
+        {
+            int indice = RandomNumberGenerator.GetInt32(tiposDePalavras.Length);
+
+            return tiposDePalavras[indice];//escolhe a palavra guardada no vetor e guarda em uma variavel para apresentala.
+        }
+        static void Cabecalho()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║            TERMO             ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║  Desenvolvido por Galvani    ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+            Console.ResetColor();
+        }
+
+        static bool ValidarPalavra(string? palavraDigitada)
+        {
+            if (palavraDigitada?.Length != 5 ||
+               string.IsNullOrWhiteSpace(palavraDigitada) ||
+               !palavraDigitada.All(char.IsLetter)) //nesta linha esta tratando sobre o erro ao inserir numero e caractere
+            {
+                Console.WriteLine("Sua palavra deve ter no maximo 5 caracteres, sem espaços, numeros ou caracteres especiais.");
+                Console.WriteLine("\nDigite ENTER para digitar novamente...");
+                Console.ReadLine();
+                return true;
+            }
+            return false;
+        }
         static void Main(string[] args)
         {
-            string? palavraDigitada;
             string[] tiposDePalavras =
             [
                 "pedra",
@@ -27,19 +57,10 @@ namespace Termo.ConsoleApp
             {
                 Console.Clear();
                 int tentativas = 5;
-                //variaveis e array globais do programa
 
-                int EscolhaDaPalavra = RandomNumberGenerator.GetInt32(tiposDePalavras.Length);
+                string palavra = SortearPalavra(tiposDePalavras);
 
-                string PalavraAleatoria = tiposDePalavras[EscolhaDaPalavra];//escolhe a palavra guardada no vetor e guarda em uma variavel para apresentala.
-
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("╔══════════════════════════════╗");
-                Console.WriteLine("║            TERMO             ║");
-                Console.WriteLine("╠══════════════════════════════╣");
-                Console.WriteLine("║  Desenvolvido por Galvani    ║");
-                Console.WriteLine("╚══════════════════════════════╝");
-                Console.ResetColor();
+                Cabecalho();
 
                 while (true)
                 {
@@ -48,32 +69,25 @@ namespace Termo.ConsoleApp
                     Console.WriteLine();
 
                     Console.Write(">");
-                    palavraDigitada = Console.ReadLine();
+                    string? palavraDigitada = Console.ReadLine();
+                   
+                    if (ValidarPalavra(palavraDigitada))continue;
+                    
 
-                    if (palavraDigitada?.Length != 5 ||
-                       string.IsNullOrWhiteSpace(palavraDigitada) ||
-                       !palavraDigitada.All(char.IsLetter)) //nesta linha esta tratando sobre o erro ao inserir numero e caractere
+                    if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação
                     {
-                        Console.WriteLine("Sua palavra deve ter no maximo 5 caracteres, sem espaços, numeros ou caracteres especiais.");
-                        Console.WriteLine("\nDigite ENTER para digitar novamente...");
-                        Console.ReadLine();
-                        continue;
-                    }
-
-                    if (palavraDigitada != PalavraAleatoria) //caso nn tenha ganhado direto ele entra em outro criterio de verificação
-                    {
-                        for (int i = 0; i < palavraDigitada.Length; i++)
+                        for (int i = 0; i < palavraDigitada?.Length; i++)
                         {
                             char verificadorDeLetras = palavraDigitada[i];
 
-                            if (verificadorDeLetras == PalavraAleatoria[i]) //letra existe e esta na pósição correta
+                            if (verificadorDeLetras == palavra[i]) //letra existe e esta na pósição correta
                             {
                                 Console.BackgroundColor = ConsoleColor.Green;
                                 Console.Write(verificadorDeLetras);
                                 Console.ResetColor();
 
                             }
-                            else if (PalavraAleatoria.Contains(verificadorDeLetras)) //contains verifica se existe na palavra mas ele nn diz a posição e nem quantas vezes ele s erepete.
+                            else if (palavra.Contains(verificadorDeLetras)) //contains verifica se existe na palavra mas ele nn diz a posição e nem quantas vezes ele s erepete.
                             {
                                 Console.BackgroundColor = ConsoleColor.DarkYellow;
                                 Console.Write(verificadorDeLetras);
@@ -91,7 +105,7 @@ namespace Termo.ConsoleApp
 
                         tentativas--;
                     }
-                    else if (palavraDigitada == PalavraAleatoria && tentativas > 0) // virifica se o usuario acertou em cheio e ganhou
+                    else if (palavraDigitada == palavra && tentativas > 0) // virifica se o usuario acertou em cheio e ganhou
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.WriteLine(palavraDigitada);
@@ -111,7 +125,7 @@ namespace Termo.ConsoleApp
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
                         Console.ResetColor();
-                    
+
                         Console.WriteLine("Pressione ENTER para sair...");
                         Console.ReadLine();
                         Console.Clear();
