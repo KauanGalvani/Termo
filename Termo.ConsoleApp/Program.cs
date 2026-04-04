@@ -25,6 +25,7 @@ namespace Termo.ConsoleApp
 
             while (true) //loop principal
             {
+                Console.Clear();
                 int tentativas = 5;
                 //variaveis e array globais do programa
 
