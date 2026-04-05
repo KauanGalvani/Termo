@@ -6,29 +6,17 @@ namespace Termo.ConsoleApp
 {
     class Program
     {
+
+
         static void Main(string[] args)
         {
-            string[] tiposDePalavras =
-            [
-                "pedra",
-                "barco",
-                "noite",
-                "sonho",
-                "campo",
-                "verde",
-                "clima",
-                "vento",
-                "mosca",
-                "livro"
-            ];
-
             while (true) //loop principal
             {
-                //Console.Clear();
+                Console.Clear();
+                Tentativas.tentativas = 5;
 
                 bool jogoAcabou = false;
-                int tentativas = 5;
-                string palavra = SortearPalavra(tiposDePalavras);
+                string palavra = SortearPalavra(JogoTermo.tiposDePalavras);
 
                 Cabecalho();
 
@@ -38,15 +26,16 @@ namespace Termo.ConsoleApp
                     Console.Write(">");
                     string? palavraDigitada = Console.ReadLine();
 
-                    if (ValidarPalavra(palavraDigitada)) continue;
+                    if (TratamentoDeErro.ValidarPalavra(palavraDigitada)) continue;
 
-                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
+                    Console.WriteLine($"\nVocê tem {Tentativas.tentativas} tentativas.");
 
-                    jogoAcabou = ChecarPalavra(palavraDigitada, palavra, tentativas);
+                    jogoAcabou = JogoTermo.ChecarPalavra(palavraDigitada, palavra);
+
+                    if (Tentativas.ContadorDeTentativas()) break;
 
                     if (!jogoAcabou)
                     {
-                        tentativas--;
                         continue;
                     }
                     else break;
@@ -57,7 +46,7 @@ namespace Termo.ConsoleApp
             }
         }
 
-        static string SortearPalavra(string[] tiposDePalavras)
+        public static string SortearPalavra(string[] tiposDePalavras)
         {
             int indice = RandomNumberGenerator.GetInt32(tiposDePalavras.Length);
 
@@ -74,80 +63,6 @@ namespace Termo.ConsoleApp
             Console.ResetColor();
         }
 
-        static bool ValidarPalavra(string? palavraDigitada)
-        {
-            if (palavraDigitada?.Length != 5 ||
-               string.IsNullOrWhiteSpace(palavraDigitada) ||
-               !palavraDigitada.All(char.IsLetter)) //nesta linha esta tratando sobre o erro ao inserir numero e caractere
-            {
-                Console.WriteLine("Sua palavra deve ter no maximo 5 caracteres, sem espaços, numeros ou caracteres especiais.");
-                Console.WriteLine("\nDigite ENTER para digitar novamente...");
-                Console.ReadLine();
-                return true;
-            }
-            return false;
-        }
-
-        static bool ChecarPalavra(string? palavraDigitada, string palavra, int tentativas)
-        {
-            if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação
-            {
-                for (int i = 0; i < palavraDigitada?.Length; i++)
-                {
-                    char verificadorDeLetras = palavraDigitada[i];
-
-                    if (verificadorDeLetras == palavra[i]) //letra existe e esta na pósição correta
-                    {
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write(verificadorDeLetras);
-                        Console.ResetColor();
-
-                    }
-                    else if (palavra.Contains(verificadorDeLetras)) //contains verifica se existe na palavra mas ele nn diz a posição e nem quantas vezes ele s erepete.
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.Write(verificadorDeLetras);
-                        Console.ResetColor();
-
-                    }
-                    else //letra nn existe
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkRed;
-                        Console.Write(verificadorDeLetras);
-                        Console.ResetColor();
-
-                    }
-                }
-            }
-            else if (palavraDigitada == palavra) // virifica se o usuario acertou em cheio e ganhou
-            {
-                Console.BackgroundColor = ConsoleColor.Green;
-                Console.WriteLine(palavraDigitada);
-                Console.BackgroundColor = ConsoleColor.Black;
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nVocê ganhou, parabéns!");
-                Console.ResetColor();
-                Console.WriteLine("Pressione ENTER para sair...");
-                Console.ReadLine();
-                Console.Clear();
-                return true;
-            }
-
-            if (tentativas == 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
-                Console.ResetColor();
-
-                Console.WriteLine("Pressione ENTER para sair...");
-                Console.ReadLine();
-                Console.Clear();
-                return true;
-            }
-            return false;
-        }
-
         static bool DevContinuar()
         {
             Console.WriteLine("Deseja jogar novamente? (S/N)");
@@ -161,6 +76,7 @@ namespace Termo.ConsoleApp
                 return false;
             }
             else return true;
+
         }
     }
 }
