@@ -16,7 +16,7 @@ namespace Termo.ConsoleApp
             "livro"
         ];
         public static string palavra = Program.SortearPalavra(tiposDePalavras);
-        public static bool ChecarPalavra(string? palavraDigitada, string palavra)
+        public static bool ChecarPalavra(string? palavraDigitada, string palavra, int tentativas)
         {
             if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação.
             {
@@ -61,9 +61,21 @@ namespace Termo.ConsoleApp
                 Console.Clear();
                 return true;
             }
+
+            if (tentativas == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
+                Console.ResetColor();
+
+                Console.WriteLine("Pressione ENTER para sair...");
+                Console.ReadLine();
+                Console.Clear();
+                return true;
+            }
             return false;
         }
-    
+
 
     }
 }

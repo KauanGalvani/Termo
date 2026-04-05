@@ -28,22 +28,13 @@ namespace Termo.ConsoleApp
 
                     Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
 
-                    jogoAcabou = JogoTermo.ChecarPalavra(palavraDigitada, palavra);
+                    jogoAcabou = JogoTermo.ChecarPalavra(palavraDigitada, palavra, tentativas);
 
-                    if (tentativas == 0)
+                    if (!jogoAcabou)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
-                        Console.ResetColor();
-
-                        Console.WriteLine("Pressione ENTER para sair...");
-                        Console.ReadLine();
-                        Console.Clear();
-                        break;
+                        tentativas--;
+                        continue;
                     }
-                    tentativas--;
-
-                    if (!jogoAcabou) continue;
                     else break;
                 }
 
