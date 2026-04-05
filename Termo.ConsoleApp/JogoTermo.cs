@@ -18,13 +18,13 @@ namespace Termo.ConsoleApp
         public static string palavra = Program.SortearPalavra(tiposDePalavras);
         public static bool ChecarPalavra(string? palavraDigitada, string palavra)
         {
-            if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação
+            if (palavraDigitada != palavra) //caso nn tenha ganhado direto ele entra em outro criterio de verificação.
             {
                 for (int i = 0; i < palavraDigitada?.Length; i++)
                 {
                     char verificadorDeLetras = palavraDigitada[i];
 
-                    if (verificadorDeLetras == palavra[i]) //letra existe e esta na pósição correta
+                    if (verificadorDeLetras == palavra[i]) //letra existe e esta na pósição correta.
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.Write(verificadorDeLetras);
@@ -47,7 +47,7 @@ namespace Termo.ConsoleApp
                     }
                 }
             }
-            else if (palavraDigitada == palavra) // virifica se o usuario acertou em cheio e ganhou
+            else if (palavraDigitada == palavra) // virifica se o usuario acertou em cheio e ganhou.
             {
                 Console.BackgroundColor = ConsoleColor.Green;
                 Console.WriteLine(palavraDigitada);
@@ -63,7 +63,7 @@ namespace Termo.ConsoleApp
             }
             return false;
         }
-
+    
 
     }
 }
