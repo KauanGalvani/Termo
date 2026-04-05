@@ -43,7 +43,7 @@ namespace Termo.ConsoleApp
                     }
                     tentativas--;
 
-                    if (!jogoAcabou)continue;
+                    if (!jogoAcabou) continue;
                     else break;
                 }
 
