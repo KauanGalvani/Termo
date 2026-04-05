@@ -1,6 +1,6 @@
 # Termo (Console App)
 
-![](docs/NVIDIA_Overlay_ppZQ5XSvlF.gif)
+![](docs\NVIDIA_Overlay_ppZQ5XSvlF.gif)
 
 ## Sobre o Projeto
 O Termo é um jogo desenvolvido em C# no console, inspirado em jogos de adivinhação de palavras.
@@ -35,7 +35,7 @@ O jogador perde quando utiliza todas as tentativas sem acertar a palavra.
 
 ## Fluxograma utilizado para comprienção da logica principal
 
-![](docs/termo.drawio.png)
+![](docs\termo.drawio.png)
 
 ## Tecnologias Utilizadas
 - C#
