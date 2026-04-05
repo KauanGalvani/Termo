@@ -41,12 +41,9 @@ namespace Termo.ConsoleApp
                         Console.Clear();
                         break;
                     }
+                    tentativas--;
 
-                    if (!jogoAcabou)
-                    {
-                        tentativas--;
-                        continue;
-                    }
+                    if (!jogoAcabou)continue;
                     else break;
                 }
 
@@ -64,11 +61,10 @@ namespace Termo.ConsoleApp
         static void Cabecalho()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║            TERMO             ║");
-            Console.WriteLine("╠══════════════════════════════╣");
-            Console.WriteLine("║  Desenvolvido por Galvani    ║");
-            Console.WriteLine("╚══════════════════════════════╝");
+            Console.WriteLine(" ═════════════════════════════  ");
+            Console.WriteLine("             TERMO              ");
+            Console.WriteLine(" ═════════════════════════════  ");
+
             Console.ResetColor();
         }
 
