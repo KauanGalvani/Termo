@@ -6,14 +6,12 @@ namespace Termo.ConsoleApp
 {
     class Program
     {
-
-
         static void Main(string[] args)
         {
             while (true) //loop principal
             {
                 Console.Clear();
-                Tentativas.tentativas = 5;
+                int tentativas = 5;
 
                 bool jogoAcabou = false;
                 string palavra = SortearPalavra(JogoTermo.tiposDePalavras);
@@ -28,14 +26,25 @@ namespace Termo.ConsoleApp
 
                     if (TratamentoDeErro.ValidarPalavra(palavraDigitada)) continue;
 
-                    Console.WriteLine($"\nVocê tem {Tentativas.tentativas} tentativas.");
+                    Console.WriteLine($"\nVocê tem {tentativas} tentativas.");
 
                     jogoAcabou = JogoTermo.ChecarPalavra(palavraDigitada, palavra);
 
-                    if (Tentativas.ContadorDeTentativas()) break;
+                    if (tentativas == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nSuas tentativas acabaram, você perdeu o jogo");
+                        Console.ResetColor();
+
+                        Console.WriteLine("Pressione ENTER para sair...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+                    }
 
                     if (!jogoAcabou)
                     {
+                        tentativas--;
                         continue;
                     }
                     else break;

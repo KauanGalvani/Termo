@@ -61,8 +61,6 @@ namespace Termo.ConsoleApp
                 Console.Clear();
                 return true;
             }
-
-            Tentativas.ContadorDeTentativas();
             return false;
         }
 
